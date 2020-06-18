@@ -19,7 +19,7 @@ bool Dielectric::Scatter(Ray const& rayIn, RayHitInfo const& info, Vector3& atte
 	if (refractionIndiceRatio * sinTheta > 1.f)
 	{
 		Vector3 reflected = Vector3::Reflect(unitDir, info.normal);
-		scattered = Ray(info.point, reflected);
+		scattered = Ray(info.point, reflected, rayIn.time);
 		return true;
 	}
 
@@ -27,11 +27,11 @@ bool Dielectric::Scatter(Ray const& rayIn, RayHitInfo const& info, Vector3& atte
 	if (randomFloat() < reflectProb)
 	{
 		Vector3 reflected = Vector3::Reflect(unitDir, info.normal);
-		scattered = Ray(info.point, reflected);
+		scattered = Ray(info.point, reflected, rayIn.time);
 		return true;
 	}
 
 	Vector3 refracted = Vector3::Refract(unitDir, info.normal, refractionIndiceRatio);
-	scattered = Ray(info.point, refracted);
+	scattered = Ray(info.point, refracted, rayIn.time);
 	return true;
 }

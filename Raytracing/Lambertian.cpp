@@ -11,7 +11,7 @@ Lambertian::Lambertian(Vector3 const& _albedo)
 bool Lambertian::Scatter(Ray const& rayIn, RayHitInfo const& info, Vector3& attenuation, Ray& scattered) const
 {
 	Vector3 scatterDirection = info.normal + RandomInUnitSphere();
-	scattered = Ray(info.point, scatterDirection);
+	scattered = Ray(info.point, scatterDirection, rayIn.time);
 	attenuation = albedo;
 	return true;
 }

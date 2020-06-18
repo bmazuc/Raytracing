@@ -7,7 +7,7 @@ class Camera
 {
 public:
 	Camera() = delete;
-	Camera(Vector3 lookFrom, Vector3 lookAt, Vector3 viewUp, float vfov, float aspectRatio, float aperture, float focusDistance);
+	Camera(Vector3 lookFrom, Vector3 lookAt, Vector3 viewUp, float vfov, float aspectRatio, float aperture, float focusDistance, float _shutterOpenTime, float _shutterCloseTime);
 	~Camera() = default;
 
 	Ray PointToRay(float x, float y);
@@ -23,6 +23,9 @@ private:
 	Vector3 up;
 
 	float lensRadius;
+
+	float shutterOpenTime;
+	float shutterCloseTime;
 };
 
 #endif // __CAMERA_H_INCLUDED__

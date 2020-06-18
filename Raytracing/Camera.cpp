@@ -2,7 +2,8 @@
 #include "Camera.h"
 #include "MathUtility.h"
 
-Camera::Camera(Vector3 lookFrom, Vector3 lookAt, Vector3 viewUp, float vfov, float aspectRatio, float aperture, float focusDistance)
+Camera::Camera(Vector3 lookFrom, Vector3 lookAt, Vector3 viewUp, float vfov, float aspectRatio, float aperture, float focusDistance, float _shutterOpenTime, float _shutterCloseTime)
+	: shutterOpenTime(_shutterOpenTime), shutterCloseTime(_shutterCloseTime)
 {
 	float theta = degreesToRadians(vfov);
 	float h = tan(theta / 2.f);
@@ -26,5 +27,5 @@ Ray Camera::PointToRay(float x, float y)
 {
 	Vector3 random = RandomInUnitDisk() * lensRadius;
 	Vector3 offset = right * random.x() + up * random.y();
-	return Ray(origin + offset, lowerLeftCorner + (horizontal * x) + (vertical * y) - origin - offset);
+	return Ray(origin + offset, lowerLeftCorner + (horizontal * x) + (vertical * y) - origin - offset, randomFloat(shutterOpenTime, shutterCloseTime));
 }

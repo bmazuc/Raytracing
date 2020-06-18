@@ -13,6 +13,7 @@
 #include "Ray.h"
 #include "HittableList.h"
 #include "Sphere.h"
+#include "MovingSphere.h"
 #include "Camera.h"
 #include "MathUtility.h"
 
@@ -22,7 +23,7 @@
 
 int const width = 1200;
 int const height = 675;
-int const samplesPerPixel = 100;
+int const samplesPerPixel = 10;
 int const maxDepth = 50;
 
 //
@@ -137,7 +138,8 @@ HittableList GenerateRandomScene()
 				{
 					Vector3 albedo = randomVector3() * randomVector3();
 					sphereMaterial = std::make_shared<Lambertian>(albedo);
-					world.Add(std::make_shared<Sphere>(center, 0.2f, sphereMaterial));
+					Vector3 center2 = center + Vector3(0.f, randomFloat(0.f, 0.5f), 0.f);
+					world.Add(std::make_shared<MovingSphere>(center, center2, 0.f, 1.f, 0.2f, sphereMaterial));
 				}
 				else if (chooseMaterial < 0.95f) // Metal (15%)
 				{
@@ -192,7 +194,7 @@ int main()
 	Vector3 viewUp(0.f, 1.f, 0.f);
 	float distanceToFocus = 10.f;
 	float aperture = 0.1f;
-	Camera camera(lookFrom, lookAt, viewUp, 20.f, float(width) / height, aperture, distanceToFocus);
+	Camera camera(lookFrom, lookAt, viewUp, 20.f, float(width) / height, aperture, distanceToFocus, 0.f, 1.f);
 
 	h = height - 1;
 
